@@ -325,8 +325,8 @@ func (svc *DownloadService) GetFileName(params *omnitruck.RequestParams) (string
 func (svc *DownloadService) GetLinuxScript(params *omnitruck.RequestParams) (string, *clients.Request) {
 	// Call omnitruck API to get the install.sh script
 	client := omnitruck.New(svc.logCtx(), svc.config.OmnitruckUrl)
-	request := client.InstallSh(params.LicenseId, params.BaseUrl)
-	
+	request := client.InstallSh(params.LicenseId)
+
 	if !request.Ok {
 		return "", &clients.Request{
 			Ok:      false,
@@ -334,7 +334,7 @@ func (svc *DownloadService) GetLinuxScript(params *omnitruck.RequestParams) (str
 			Message: "Error fetching install.sh from omnitruck: " + request.Message,
 		}
 	}
-	
+
 	return string(request.Body), &clients.Request{
 		Ok:      true,
 		Code:    fiber.StatusOK,
@@ -345,8 +345,8 @@ func (svc *DownloadService) GetLinuxScript(params *omnitruck.RequestParams) (str
 func (svc *DownloadService) GetWindowsScript(params *omnitruck.RequestParams) (string, *clients.Request) {
 	// Call omnitruck API to get the install.ps1 script
 	client := omnitruck.New(svc.logCtx(), svc.config.OmnitruckUrl)
-	request := client.InstallPs1(params.LicenseId, params.BaseUrl)
-	
+	request := client.InstallPs1(params.LicenseId)
+
 	if !request.Ok {
 		return "", &clients.Request{
 			Ok:      false,
@@ -354,7 +354,7 @@ func (svc *DownloadService) GetWindowsScript(params *omnitruck.RequestParams) (s
 			Message: "Error fetching install.ps1 from omnitruck: " + request.Message,
 		}
 	}
-	
+
 	return string(request.Body), &clients.Request{
 		Ok:      true,
 		Code:    fiber.StatusOK,
